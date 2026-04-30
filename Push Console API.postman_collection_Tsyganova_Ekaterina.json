@@ -1,0 +1,981 @@
+{
+  "info": {
+    "_postman_id": "09fc1d7b-dbcb-4ab4-9879-a04bf8a602d6",
+    "name": "Push Console API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "47043675"
+  },
+  "item": [
+    {
+      "name": "Project",
+      "item": [
+        {
+          "name": "get project",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Data values check\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.include(\"project_id\");\r",
+                  "    pm.expect(pm.response.text()).to.include(\"name\");\r",
+                  "\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"OK\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"push_console_projects_successful_getting\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get project 401 (no auth)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Data values check\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.include(\"reason\");\r",
+                  "\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"ERROR\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"general_unauthorized\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Data values check\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.include(\"project_id\");\r",
+                  "\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"OK\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"push_console_project_successful_created\");\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"project3838385\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "post 500 (same name)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "    pm.response.to.have.status(409);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"ERROR\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"test_course_project_already_exists\");\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"project3838384\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get project (id)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Data values check\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.include(\"project_id\");\r",
+                  "    pm.expect(pm.response.text()).to.include(\"name\");\r",
+                  "    pm.expect(pm.response.text()).to.include(\"service_tokens\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"OK\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"push_console_project_successful_getting\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects/188b8a7c-791a-4135-9ede-c548d3bfc173",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects",
+                "188b8a7c-791a-4135-9ede-c548d3bfc173"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "188b8a7c-791a-4135-9ede-c548d3bfc173}\n",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get project 404 (id)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"ERROR\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"test_course_project_not_found\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects/188b8a7c-791a-4135-9ede-c548d3bfc170",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects",
+                "188b8a7c-791a-4135-9ede-c548d3bfc170"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "188b8a7c-791a-4135-9ede-c548d3bfc173}\n",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update project",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"OK\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"push_console_project_successful_updated\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"HGFHFHGFHF\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects/188b8a7c-791a-4135-9ede-c548d3bfc173",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects",
+                "188b8a7c-791a-4135-9ede-c548d3bfc173"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "188b8a7c-791a-4135-9ede-c548d3bfc173}\n",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update project 422 (empty)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"ERROR\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"go_validation\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects/188b8a7c-791a-4135-9ede-c548d3bfc173",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects",
+                "188b8a7c-791a-4135-9ede-c548d3bfc173"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "188b8a7c-791a-4135-9ede-c548d3bfc173}\n",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update project 500 (not unique)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "    pm.response.to.have.status(409);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"ERROR\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"test_course_project_already_exists\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"впавврfghgfjd\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects/188b8a7c-791a-4135-9ede-c548d3bfc173",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects",
+                "188b8a7c-791a-4135-9ede-c548d3bfc173"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "188b8a7c-791a-4135-9ede-c548d3bfc173}\n",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete project",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"OK\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"push_console_project_successful_deleted\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects/949a3b4e-8f89-4016-933d-d1d7320a1d26",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects",
+                "949a3b4e-8f89-4016-933d-d1d7320a1d26"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "188b8a7c-791a-4135-9ede-c548d3bfc173}\n",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete project 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"ERROR\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"test_course_project_not_found\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects/949a3b4e-8f89-4016-933d-d1d7320a1d26",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects",
+                "949a3b4e-8f89-4016-933d-d1d7320a1d26"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "188b8a7c-791a-4135-9ede-c548d3bfc173}\n",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add service token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"OK\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"push_console_service_token_created\");\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects/331366fb-a35b-4952-9ae7-494ec58d779d/service-tokens",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects",
+                "331366fb-a35b-4952-9ae7-494ec58d779d",
+                "service-tokens"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add service token 409 (max count of service tokens got)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "    pm.response.to.have.status(409);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"ERROR\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"test_course_service_tokens_count_limit_exceeded\");\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects/27e2863c-3920-419e-b006-10f50b50af16/service-tokens",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects",
+                "27e2863c-3920-419e-b006-10f50b50af16",
+                "service-tokens"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete service token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"OK\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"push_console_service_token_deleted\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects/331366fb-a35b-4952-9ae7-494ec58d779d/service-tokens/5b1ZkJadroAnf0CTpVoFguKLXZIf5EXjP+WUur...KJN6jAKqCpNldAh7s+ZCM5tx1s2m2hwED3XRrr",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects",
+                "331366fb-a35b-4952-9ae7-494ec58d779d",
+                "service-tokens",
+                "5b1ZkJadroAnf0CTpVoFguKLXZIf5EXjP+WUur...KJN6jAKqCpNldAh7s+ZCM5tx1s2m2hwED3XRrr"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "188b8a7c-791a-4135-9ede-c548d3bfc173}\n",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete service token 400 (without value)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"ERROR\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"general_bad_request_error\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/projects/331366fb-a35b-4952-9ae7-494ec58d779d/service-tokens/{value}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "projects",
+                "331366fb-a35b-4952-9ae7-494ec58d779d",
+                "service-tokens",
+                "{value}"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "188b8a7c-791a-4135-9ede-c548d3bfc173}\n",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {\r",
+                  "    var responseBody = pm.response.json();\r",
+                  "    pm.environment.set(\"access_token\", responseBody.data.access_token);\r",
+                  "}\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response values check\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"OK\");\r",
+                  "    pm.expect(jsonData.msg_code).to.eql(\"push_console_login_successful\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Data values check\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.include(\"user_id\");\r",
+                  "    pm.expect(pm.response.text()).to.include(\"access_token\");\r",
+                  "    pm.expect(pm.response.text()).to.include(\"refresh_token\");\r",
+                  "    pm.expect(pm.response.text()).to.include(\"user_role\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/push-console/api/v1/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "push-console",
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "noauth"
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
